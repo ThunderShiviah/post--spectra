@@ -32,202 +32,82 @@
     </d-figure>
 
     <p>
-      In this article, we will explore the challenges and opportunities of applying machine learning to light - specifically Raman spectra - in order to enable continuous measurements of biomarkers.
+      In this article, we will explore the challenges and opportunities of applying machine learning to light.
     </p>
 
-    <h2>Introduction and context</h2>
-    <p>There is unprecedented demand for continuous, real-time information about our health. We use wearables to analyze biomarkers such as heart beats per minute or heart rate variability to tell us about our health <d-cite key='newswire2021demand'></d-cite>. People with diabetes can use continuous glucose monitors to measure whether their glucose is at dangerous levels throughout the day simply by checking an app on their smartphone.</p>
-    <p>What if we could directly measure a variety of chemical biomarkers in cells, blood, and other biological systems as simply as a continuous glucose monitor so that we could directly observe biological processes such as cell metabolism? Such an ability would be extremely powerful since we would no longer need to guess the state of the body using proxy signals - rather than titrating the dose of a medication or timing a dialysis treatment by checking over time how a patient is responding, a physician could simply see how the metabolic systems are responding via direct, real-time chemical biomarkers. Continuous monitoring of chemicals in the body such as blood-oxygen monitors are now routine in healthcare and yet the ability to measure many biomarkers continuously in biological substances through a generalizable process remains elusive.</p>
-    <p>Similarly, the demand for biological therapeutics and biological derivatives has skyrocketed necessitating the need for vast bioreactor farms filled with massive fermentation tanks containing cells that have been genetically engineered to produce desired products. However, scaling such biological production is challenging, partially due to the difficulty in understanding what the current state of each bioreactor is as well as how effective different interventions are in steering the bioreactor towards the desired state. Although there are many attempts to continuously and directly measure biomarkers such as glucose and carbon-dioxide in bioreactors, such measurement struggles with sensitivity, specificity and robustness.</p>
-    
-    <h3 id="what-makes-measuring-many-biomarkers-continuously-so-challenging">What makes measuring many biomarkers continuously so challenging?</h3>
-    
-    <p>Limitations with current ways of measuring biomarkers generally stem from the lack of ability for a measurement to be real-time and continuous, generalize to different biomarkers, or, in the case where a biosensor is real-time and continuous and generalizable to many biomarkers, to have sufficient specificity, sensitivity and robustness.</p>
-    <p>To see why the above is true, we can look at the fundamental limitations of each category of biosensors that exist today.</p>
-    <p>We can separate different ways of measuring chemical biomarkers in biological substances by the process that drives its <i>biotransducer</i>, the part of the system that converts the biomarker concentration into an electrical or optical signal that can be read out by the user.<d-footnote>See https://en.wikipedia.org/wiki/Biosensor</d-footnote></p>
-    <p>The major biosensor categories are:</p>
-    <h4 id="electrochemical">Electrochemical</h4>
-    
-    <p><i>The sensor reacts with the biomarker of interest to produce an electrical signal.</i></p>
-    <p>Many popular continuous glucose monitors insert a small probe into the interstitial tissue. The tip of the probe interacts with the glucose in the interstitial tissue and produces a small electric signal that can be used to measure glucose concentration.</p>
-    <p>The challenge with electrochemical sensors is that they do not easily generalize to different biomarkers - the electrochemical process tends to be specific to a single biomarker.</p>
-    <h4 id="biochemical">Biochemical</h4>
-    <p><i>A chemical or biological substance that is known to react with the biomarker of interest in a specific way is added to the system. The observer then checks if the reaction takes place or not.</i></p>
-    <p>Medical labs rely heavily on such biochemical systems to provide gold standard measurements of biomarkers in bodily fluid.</p>
-    <p>Biochemical measurements also suffer from being difficult to generalize to many biomarkers - each biomarker requires a different specific biochemical reaction.</p>
-    <p>Additionally, mixing the chemicals in with the biological fluid tends to destroy the fluid and consume the supply of reagents.</p>
-    <h4 id="biophysical">Biophysical</h4>
-    <p><i>The biomarker of interest is measured through a change in mass or acoustic wave interaction.</i></p>
-    <p>Medical ultrasound is used to measure biomarkers using sound waves.</p>
-    <p>Generally useful for imaging but not as relevant for measurement of many chemical biomarkers.</p>
-    <h4 id="optical">Optical</h4>
-    <p><i>Biomarkers are measured through the interaction of the biomarker with light.</i></p>
-    <p>Smart-watches and blood oxygen monitors tend to use absorption spectroscopy.</p>
-    <p>Cheap, capable of continuous, real-time measurement. While theoretically able to measure any optically active substance, currently has struggles with sensitivity, specificity and robustness (especially with biomarkers in very small quantities as, in the case of absorption spectroscopy, the intensity of the signal is directly proportional to the concentration via Beer-Lambert Law)</p>
-    <p>Of the above options, optical methods carry tremendous promise due to their low-cost, easily generalizable nature - we only require light and can theoretically measure anything optically active provided we have sufficient signal.</p>
-    <p>However continuous, accurate and robust measurements of biomarkers has proven challenging in practice (for a fascinating account of attempts -and subsequent failures - to continuously measure glucose only by light, see the book by Smith<d-cite key="smith2020turkey"></d-cite>).</p>
-    <p>Part of the challenge of optical measurement is that the optical signals are either too simple - and not specific enough to know which chemical the signal is arising from, as is the case of absorption - or too complex, as is the case with <strong>Raman spectroscopy</strong> - a tantalizing field of spectroscopy in that the Raman spectra provides a unique fingerprint of each optically active substance - provided you can get a sufficient signal, in itself no easy feat.</p>
-    
-    <h2 id="what-is-raman-spectroscopy">What is Raman Spectroscopy?</h2>
+    <h4>Introduction and context</h4>
+    <p>Goal is to measure many things continuously in biological substances.
+  </p>
 
-    <p>Raman spectroscopy, named after the Indian scientist C. V. Raman, who observed the effect in organic liquids in 1928, measures <i>Raman scattering of light</i>, which arises from resonance of rotational, vibrational, and electronic states of a molecule. Because vibrational frequencies are specific to a molecule’s chemical bonds and symmetry, Raman provides a fingerprint to identify molecules<d-footnote>Source: https://en.wikipedia.org/wiki/Raman_spectroscopy</d-footnote>.</p>
-<p>Raman spectroscopy is used in a wide variety of applications in biology and medicine today, including measurement of continuous biomarkers in bioreactors and so seems like an extremely promising candidate for a sensor that can provide continuous, real-time measurement of many different biomarkers.</p>
-<h3 id='how-one-measures-concentrations-with-raman'>How one measure concentrations with Raman</h3>
-<p>Raman signal is a mix of Raman scattering, fluorescence, noise, and cosmic rays (spikes)<d-cite key='pelletier2003quant'></d-cite>.</p>
+<p>  Different ways to measure stuff - electrochemical, physical, optical - however there are fundamental challenges around real-time continuous measurements of multiple biomarkers at physiological concentrations and timescales.
+  </p>
+
+
+    <h4>Challenges</h4>
+<p>However, raman struggles with intrinsic variability due to patient to patient variability as well as other sources of variability such as those coming from the measurement device (usually needing to be overcome by complex and costly instrumentation) and environment.
+  <d-footnote id="d-footnote-1"><i> Popp, Bocklitz et al (2016) 'Towards an improvement of model transferability for Raman
+    spectroscopy in biological applications'</i>
+  </d-footnote></p>
+
+  <p>While many promising papers show that people can accurately measure many biomarkers with raman in the lab - industrial and clinical solutions struggle with variability meaning that analyzing raman is time- and resource and expert intensive and therefore not widely adopted outside of a few specific use-cases (such as bioreactor monitoring and illicit drug detection).</p>
+  <h4>How one measures concentrations with Raman</h4>
+  <p>Raman signal is a mix of raman scattering, fluorescence, noise, and cosmic rays (spikes).
+
+    <div class='img l-middle'>
+      <figure>
+        <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2FthunderDB%2Fb9HedgJmiX.png?alt=media&token=05beb9d6-8719-4e5b-ae08-1b2a3dbfb65c" />
+    </figure>
+      </div>
+
+    Area under raman spectra generally relates linearly to concentrations of corresponding biomarkers which allows for concentration measurement.
+  </p>
+  <figure>
+      <img src="https://www.science.org/cms/10.1126/sciadv.aay5206/asset/deaa1fcc-ba51-4eaf-a017-ca15a414ead6/assets/graphic/aay5206-f1.jpeg" alt="Glucose over time." />
+    </figure>
+
+    <p>By measuring the area under the preprocessed and baseline subtracted raman signal we can get a regression against concentration of the biomarker of interest. We can then use this regression line with the spectra to map concentrations over</p>
+    
+    
+      <d-figure class=l-page-outset>
+        <figure>
+          <iframe width="90%" height="784" frameborder="0"
+  src="https://observablehq.com/embed/101bed18dda77818?cells=combined_chart"></iframe>
+          <figcaption>Mapping between spectra, concentrations and time.</figcaption>
+        </figure>
+      </d-figure>
+  
+    <p>However, direct measurement concentration via raman signals is non-trivial due to 
+      <ol> 
+        <li> Low signal to noise ratio. </li>
+        <li>  Background variation.</li>
+        <li> Raman peaks, shifting, distorting and overlapping. </li>
+      </ol>
+    </p>
 <div class='img l-middle'>
   <figure>
-    <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2FthunderDB%2Fb9HedgJmiX.png?alt=media&token=05beb9d6-8719-4e5b-ae08-1b2a3dbfb65c" />
+    <img src="https://analyticalsciencejournals.onlinelibrary.wiley.com/cms/asset/3460f673-6c25-4968-9bc8-3c31634adcfe/jrs4886-fig-0001-m.jpg" alt="Examples of Raman preprocessing." />
 </figure>
   </div>
-
-<p>Area under the Raman spectra generally relates linearly to concentrations of corresponding biomarkers which allows for concentration measurement.</p>
-<figure>
-  <img src="https://www.science.org/cms/10.1126/sciadv.aay5206/asset/deaa1fcc-ba51-4eaf-a017-ca15a414ead6/assets/graphic/aay5206-f1.jpeg" alt="Glucose over time." />
-</figure>
-
-
-<p>By measuring the area under the preprocessed and baseline subtracted Raman signal we can get a regression against concentration of the biomarker of interest. We can then use this regression line with the spectra to map concentrations over time.</p>
-<d-figure class=l-page-outset>
-  <figure>
-    <iframe width="90%" height="784" frameborder="0"
-src="https://observablehq.com/embed/101bed18dda77818?cells=combined_chart"></iframe>
-    <figcaption>Hover over the points in the plots to see how the spectra connects to concentrations and time.</figcaption>
-  </figure>
-</d-figure>
-
-    <h2>Challenges</h2>
-    <p>As promising as it seems, Raman struggles with measurement challenges due to its extremely weak signal (one in ten million photons is Raman scattering) and intrinsic variability due to patient to patient variability as well as other sources of variability such as those coming from the measurement device (usually needing to be overcome by complex and costly instrumentation) and environment.</p>
-    <p>While many promising papers show that people can accurately measure many biomarkers with Raman in the lab - industrial and clinical solutions struggle with variability meaning that analyzing Raman is time- and resource and expert intensive and therefore not widely adopted outside of a few specific use-cases (such as bioreactor monitoring and illicit drug detection)
-      <d-cite key="guo2017transfer"></d-cite>.</p>
-
-  <p>Specifically, direct measurement of biomarker concentrations via raman signals is non-trivial due to 
-    <ol> 
-      <li> Low signal to noise ratio. </li>
-      <li>  Background variation.</li>
-      <li> Raman peaks, shifting, distorting and overlapping. </li>
-    </ol>
-  </p>
-  <div class='img l-middle'>
-  <figure>
-  <img src="https://analyticalsciencejournals.onlinelibrary.wiley.com/cms/asset/3460f673-6c25-4968-9bc8-3c31634adcfe/jrs4886-fig-0001-m.jpg" alt="Examples of Raman preprocessing." />
-  </figure>
-  </div>
-  <h2 id="overcoming-the-challenges-of-Raman-spectroscopy-via-deep-learning">Overcoming the Challenges of Raman Spectroscopy via Deep Learning</h2>
-  <p>In order for Raman to be a viable method for measuring many biomarkers real-time and continuously in physiological concentrations and over physiological time-scales we need the following:</p>
-  <ol>
-  <li>
-  <p>A Raman signal that has sufficient strength to be measured - meaning at minimum the change in intensity of the signal with respect to the change in concentration of the biomarker of interest must be large enough to be measured over the intrinsic shot (Poisson) noise of the signal.</p>
-  </li>
-  <li>
-  <p>The Raman signal must be measured across sufficiently many wavelengths so that the signals from different biomarkers can be separated.</p>
-  </li>
-  <li>
-  <p>The non-Raman signal can be separated from the signal in a way that does not meaningfully destroy information or insert spurious signal which might distort the measurement.</p>
-  </li>
-  </ol>
-  <p>While researchers have demonstrated it is feasible to acquire such a signal in limited cases, due to the complex, time varying nature of the Raman signal and the dominance of the non-Raman signal, models have struggled with robustness.</p>
-  <p>Deep learning shows promise as a way to overcome the failures of previous modeling attempts<d-cite key='pradhan2020boon'></d-cite>.</p>
-  <p>Specifically, while previous methods are highly sensitive to spectra variability or struggle with non-linear interactions, deep learning (specifically convolutional networks) has shown promise in learning highly variable and non-linear relationships in the field of computer vision.</p>
-  <h3 id="a-toy-example-on-how-to-apply-deep-learning-to-raman-spectra">A toy example on how to apply deep learning to Raman spectra</h3>
-  <h4 id="general-approach">General approach</h4>
-  <p>We will focus first on separating Raman signal from non-Raman signal since in practice, much of the difficulty in continuous measurement comes from the need for experts to manually choose and apply background subtraction and de-noising techniques.</p>
-  <p>In practice, one of the difficulties for choosing a background subtraction technique is the lack of a ground-truth ‘pure’ Raman signal in most cases (some exceptions exist when a signal tends to be Raman-active but not absorption or IR-active over the light region of interest).</p>
-  <p>Therefore, experts often use the final chemical accuracy of their end to end model to determine which background subtraction method is optimal (simply treating the choice of background subtraction method as a hyper-parameter and iterating over different background subtraction methods).</p>
-  <p>In practice, such models tend generalize poorly<d-cite key='guo2017transfer'></d-cite>.</p>
-  <p>We will solve the lack of ground-truth Raman spectra by simply generating synthetic Raman spectra and then combining the signal with synthetic non-Raman signal.</p>
-  <p>One can then increase the fidelity of the synthetic Raman either through the use of GANs or some other synthetic model - thus alleviating one of the main challenges in applying ML to Raman - the lack of (labelled) data.</p>
-  <h4 id="generating-synthetic-raman-spectra-examples">Generating synthetic Raman spectra examples</h4>
-  <p>We will start by generating some synthetic examples of Raman with non-Raman signals, using the fact that a Raman spectrum can be mathematically expressed using a Voigt profile - a convolution of a Gaussian and Lorentzian distribution.</p>
-  <p>Given the difficulties in numerically modeling a Voigt profile, we’ll instead use a linear combination of a Gaussian curve and a Lorentzian curve (known as the <strong>pseudo-Voigt approximation</strong>).</p>
-  
-  <d-code block="" language="python">
-def G(x, alpha):
-    """Return Gaussian line shape at x with HWHM alpha"""
-    return np.sqrt(np.log(2) / np.pi) / alpha * np.exp(-((x / alpha) ** 2) * np.log(2))
-
-
-def L(x, gamma):
-    """Return Lorentzian line shape at x with HWHM gamma"""
-    return gamma / np.pi / (x**2 + gamma**2)
-
-
-def V(x, alpha, gamma):
-    """
-    Return the Voigt line shape at x with Lorentzian component HWHM gamma
-    and Gaussian component HWHM alpha.
-    """
-    sigma = alpha / np.sqrt(2 * np.log(2))
-
-    return (
-        np.real(wofz((x + 1j * gamma) / sigma / np.sqrt(2)))
-        / sigma
-        / np.sqrt(2 * np.pi)
-    )
-
-  </d-code>
-<d-footnote>In the above code, `wofz` refers to the Faddeeva function, a complex error function relating to electromagnetic responses in complicated media.</d-footnote>
-  <p>We can then generate samples by combining our synthetic Raman spectra generated using the above building blocks with a simple approximation of a background signal (coming from absorption and IR spectra) through the combination of a polynomial with broad Gaussians and Poisson noise (optionally also adding cosmic ray spikes) and then randomly sampling parameters.</p>
-  <d-figure class=l-page-outset>
-    <figure>
-      <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~ThunderShiviah/72.embed"></iframe>
-      <figcaption>A sample of synthetic spectra generated using the above method.</figcaption>
-    </figure>
-  </d-figure>
-  
-  <p>See an <a href='https://share.streamlit.io/thundershiviah/deep-raman/main/main.py'>interactive implementation of the above synthetic Raman generation</a> and the <a href='https://github.com/ThunderShiviah/deep-raman/blob/main/deep_raman/utils.py'>associated code</a>.</p>
- 
-  <h4 id="applying-a-convolutional-network-to-separate-the-raman-signal">Applying a convolutional network to separate the Raman Signal</h4>
-  <p>Our problem set up is to input the combined Raman and background signals and have the model output only the Raman signal.</p>
-  <p>In order to have our ConvNet learn to reduce the background and sharpen our signal it’s important that we not use an L2 metric since these metrics lead to averaging of the peaks (akin to blurring in images). In practice MAE and PSNR both provide decent results as does SSIM.</p>
-  <p>We implement a basic ConvNet using the architecture below and train and test on independent sets of synthetic spectra.</p>
-  
-
-  <d-code block="" language="python">
-    from tensorflow import keras
-    from tensorflow.keras import datasets, layers, models
-
-    inputs = keras.Input(shape=(32 * 32, 1))
-    x = layers.BatchNormalization(axis=-1)(inputs)
-
-    x = layers.Conv1D(16, 16, input_shape=(32 * 32, 1))(inputs)
-    x = layers.MaxPooling1D(2)(x)
-    x = layers.Conv1D(16, 16, 16)(x)
-    x = layers.MaxPooling1D(3)(x)
-
-    x = layers.Conv1D(64, 10)(x)
-    outputs = layers.Conv1DTranspose(1, 1024)(x)
-
-    model = models.Model(inputs=inputs, outputs=outputs, name="cnn_model")
-
-    model.compile(
-        loss=metrics.psnr_loss,
-        optimizer=keras.optimizers.Nadam(learning_rate=3e-3),
-        metrics=["mae", "mape"],
-    )
-  </d-code>
-  
-  <p>We can then apply the model to the synthetic Raman spectra and observe the model effectively separate out the synthetic signal, converging to a reasonable result on the hold out set after only 100 epochs, as seen below.</p>
-  <div class='img l-middle'>
-    <figure>
-      <img src="/static/images/1_epoch.png" />
-      <figcaption>Background subtraction model after training for 1 epoch.</figcaption>
-  </figure>
-  <figure>
-    <img src="/static/images/10_epochs.png" />
-    <figcaption>Background subtraction model after training for 10 epochs.</figcaption>
-
-</figure>
-<figure>
-  <img src="/static/images/100_epochs.png" />
-  <figcaption>Background subtraction model after training for 100 epochs.</figcaption>
-</figure>
-    </div>
-  <p>Here is <a href='https://share.streamlit.io/thundershiviah/deep-raman/main/model.py'>an interactive demo of background subtraction via a tensorflow ConvNet applied to our synthetic Raman spectra</a> and the <a href='https://github.com/ThunderShiviah/deep-raman/blob/main/deep_raman/model.py'>associated code</a>.</p>
- 
-  <h4>Conclusions</h4>
+  <h4>Modeling Spectra</h4>
+  <p>TODO-UPDATE TEXT: We can use a deep learning model to model the spectra and then use this model to predict concentrations. This is a powerful tool for predicting biomarker concentrations.
+    <h4>Conclusions</h4>
 
     <p>
-We have seen how effective deep learning methods can be in baseline subtracting a simple toy example of Raman spectra however it remains to be shown how such approaches generalize to real, unseen Raman data arising from different environments, substances, biomarkers, and devices. Still, the rise of modern deep learning holds great promise for unlocking Raman as a commercially viable way to continuously measure many biomarkers - bringing unprecedented level of continuous, direct observation to biology and medicine - and revolutionizing our understanding of living systems in the process.</p>
+      <b> Key observations:</b>
+      <ul>
+         <li>We can treat everyting as a linearly separable system.</li>
+         <li>Borrow metrics from DL synthetic image generation (SNR, SSIM, Wasserstein Distance) since they preserve fine-grained features much better than standard spectroscopy metrics (MSE).</li>
+         <li>Focus on first solving and productionizing background subtraction via deployable API.</li>
+      </ul>
+      <p>
+        Other important observations (out of scope for this discussion):
+        <ul>
+           <li>Volume over data quality... up to a point.</li>
+           <li>Establishing the right baseline and evaluation metrics in biology and medicine is non-trivial.</li>
+           <li>Bridging culture between scientists, doctors and software engineering can make or break ML projects.</li>
+        </ul>
+      </p>  
+    </p>
 
 
    
@@ -237,14 +117,10 @@ We have seen how effective deep learning methods can be in baseline subtracting 
 
   <d-appendix>
     <h3>Acknowledgments</h3>
-    <p>
-      This article uses styles from the excellent machine learning research journal <a href='https://distill.pub/'>Distill</a>.
-    </p>
+
     <p>
       Diagrams are made with d3.js, vega.js, vega-lite and plotly.
     </p>
-    <p>
-Interactive applications are made with Tensorflow and Streamlit.</p>
 
     
 
